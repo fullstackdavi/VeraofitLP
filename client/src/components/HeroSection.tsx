@@ -17,7 +17,7 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
       
       <div className="relative z-10 container mx-auto px-4 py-16 text-center max-w-4xl">
         <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 leading-tight">
-          Emagreça Até o Verão
+          Verão Fit
         </h1>
         <h2 className="text-white text-3xl md:text-4xl font-semibold mb-8">
           Desafio de 30 Dias
