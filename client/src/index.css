@@ -188,28 +188,18 @@
     position: fixed;
     top: 0;
     left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    width: auto;
-    height: auto;
-    z-index: -2;
-    object-fit: cover;
-    pointer-events: none;
-    filter: brightness(0.8);
-  }
-
-  /* === DARK OVERLAY FOR TEXT CONTRAST === */
-  body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.45);
-    backdrop-filter: blur(2px);
-    z-index: -1;
+    object-fit: cover;
+    z-index: -9999;
+    opacity: 0.5;
     pointer-events: none;
+  }
+
+  /* === CONTENT POSITIONING === */
+  main, section, div, .container {
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -247,63 +237,41 @@
     pointer-events: none;
   }
 
-  /* === TRANSPARENT CARDS === */
+  /* === SOLID CARDS WITH WHITE BACKGROUNDS === */
   .glass-card,
   [class*="card"], 
   [class*="Card"],
-  .shadcn-card {
-    background: transparent !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: none !important;
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    border-radius: 20px;
-    transition: transform 0.3s ease, border-color 0.3s ease;
+  .shadcn-card,
+  .card,
+  .box,
+  .content-box {
+    background-color: white !important;
+    position: relative;
+    z-index: 1;
   }
 
-  .glass-card:hover,
-  [class*="card"]:hover, 
-  [class*="Card"]:hover,
-  .shadcn-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.2) !important;
-  }
-
-  /* === TEXT VISIBILITY === */
-  h1, h2, h3, h4, h5, h6 {
-    color: #ffffff !important;
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-  }
-
-  p, span, li, label, div {
-    color: rgba(255, 255, 255, 0.95) !important;
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
-  }
-
-  /* Links */
-  a {
-    color: rgba(255, 255, 255, 0.95) !important;
-    transition: color 0.3s ease;
-  }
-
-  a:hover {
-    color: #00ffb3 !important;
+  /* === RESTORE ORIGINAL TEXT COLORS === */
+  h1, h2, h3, h4, h5, h6,
+  p, span, li, label, a {
+    color: inherit !important;
+    text-shadow: none !important;
   }
 
   /* Button text */
   button {
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    text-shadow: none;
   }
 
-  /* Input fields */
+  /* Input fields - restore defaults */
   input, textarea, select {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.2) !important;
-    color: #ffffff !important;
+    background-color: inherit !important;
+    border-color: inherit !important;
+    color: inherit !important;
   }
 
   input::placeholder, textarea::placeholder {
-    color: rgba(255, 255, 255, 0.6) !important;
+    color: inherit !important;
+    opacity: 0.5;
   }
 
   /* .no-default-hover-elevate/no-default-active-elevate is an escape hatch so consumers of
