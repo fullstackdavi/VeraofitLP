@@ -686,7 +686,7 @@ export default function Home() {
   const currentDayData = selectedDay !== null ? CHALLENGE_DATA[selectedDay - 1] : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 via-orange-50 to-white">
+    <div className="min-h-screen">
       <HeroSection onStartChallenge={handleStartChallenge} />
 
       <div className="py-12 space-y-12 container mx-auto px-4">

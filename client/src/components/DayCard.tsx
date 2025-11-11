@@ -15,17 +15,23 @@ export default function DayCard({ day, isCompleted, isLocked = false, onClick }:
       onClick={isLocked ? undefined : onClick}
       className={cn(
         "relative rounded-xl p-6 transition-all duration-300",
-        "border-4",
+        "border-4 backdrop-blur-md",
         isLocked 
-          ? "border-gray-400 bg-gray-200 cursor-not-allowed opacity-70" 
+          ? "border-gray-400 cursor-not-allowed opacity-70" 
           : "cursor-pointer hover:shadow-2xl hover:-translate-y-1",
         isCompleted && !isLocked
-          ? "border-green-500 bg-green-100" 
-          : !isLocked && "border-gray-800 bg-white hover:border-blue-500"
+          ? "border-green-500" 
+          : !isLocked && "border-white/30 hover:border-blue-400"
       )}
       style={{
-        backgroundColor: isCompleted && !isLocked ? '#d1fae5' : isLocked ? '#e5e7eb' : '#ffffff',
-        boxShadow: isCompleted && !isLocked ? '0 10px 25px rgba(34, 197, 94, 0.3)' : '0 4px 10px rgba(0,0,0,0.15)'
+        backgroundColor: isCompleted && !isLocked 
+          ? 'rgba(209, 250, 229, 0.25)' 
+          : isLocked 
+          ? 'rgba(229, 231, 235, 0.25)' 
+          : 'rgba(255, 255, 255, 0.15)',
+        boxShadow: isCompleted && !isLocked 
+          ? '0 10px 25px rgba(34, 197, 94, 0.2)' 
+          : '0 4px 10px rgba(0,0,0,0.1)'
       }}
       data-testid={`card-day-${day}`}
     >
