@@ -16,7 +16,7 @@ interface DayCalendarProps {
   freeDaysLimit?: number;
 }
 
-export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit = 10 }: DayCalendarProps) {
+export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit = 7 }: DayCalendarProps) {
   const days = Array.from({ length: 30 }, (_, i) => i + 1);
   const completedCount = completedDays.size;
   const points = calculatePoints(completedCount);
@@ -31,7 +31,7 @@ export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit =
           Calendário do Desafio - 30 Dias
         </h2>
         <p className="text-center text-muted-foreground mb-8 max-w-2xl mx-auto">
-          Complete os 30 dias e ganhe 10% de desconto a cada etapa! Primeiros 10 dias grátis. Clique em cada dia para ver as dicas, receitas e marcar como concluído
+          Complete os 30 dias e ganhe 10% de desconto a cada etapa! Primeiros 7 dias grátis. Clique em cada dia para ver as dicas, receitas e marcar como concluído
         </p>
 
         <Card 

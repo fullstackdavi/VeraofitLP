@@ -525,7 +525,7 @@ const CHALLENGE_DATA = [
   }
 ];
 
-const FREE_DAYS_LIMIT = 10; // Define o limite de dias gratuitos
+const FREE_DAYS_LIMIT = 7; // Define o limite de dias gratuitos
 
 export default function Home() {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -552,9 +552,9 @@ export default function Home() {
   useEffect(() => {
     localStorage.setItem('completedDays', JSON.stringify(Array.from(completedDays)));
 
-    // Mostrar CTA quando o usuário completar vários dias gratuitos (a partir do dia 7)
+    // Mostrar CTA quando o usuário completar vários dias gratuitos (a partir do dia 5)
     const freeCompletedDays = Array.from(completedDays).filter(day => day <= FREE_DAYS_LIMIT);
-    if (freeCompletedDays.length >= 7 && !isPremiumUser) {
+    if (freeCompletedDays.length >= 5 && !isPremiumUser) {
       setShowUpgradeCTA(true);
     }
   }, [completedDays, isPremiumUser]);
@@ -603,16 +603,40 @@ export default function Home() {
         const currentPrice = getCurrentPrice(newCount);
 
         toast({
-          title: `🎉 Dia ${selectedDay} Concluído!`,
+          title: (
+            <div className="flex items-center gap-2">
+              <span className="text-2xl animate-bounce">🎉</span>
+              <span>Dia {selectedDay} Concluído!</span>
+              <span className="text-2xl animate-bounce" style={{ animationDelay: '0.1s' }}>🎊</span>
+            </div>
+          ),
           description: (
-            <div className="space-y-2">
-              <div className="text-sm space-y-1">
-                <div>✨ +100 pontos (Total: {points})</div>
-                <div>💰 Desconto atual: {currentDiscount}%</div>
-                <div>🏷️ Preço atual: R$ {currentPrice.toFixed(2)}</div>
+            <div className="space-y-3">
+              <div className="flex items-center justify-center gap-1 text-3xl">
+                <span className="animate-bounce" style={{ animationDelay: '0s' }}>🎉</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>✨</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>🎊</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.3s' }}>🌟</span>
+                <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>🎉</span>
+              </div>
+              <div className="text-sm space-y-2 bg-gradient-to-r from-purple-50 to-blue-50 p-3 rounded-lg">
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">✨</span>
+                  <span className="font-semibold">+100 pontos</span>
+                  <span className="text-muted-foreground">(Total: {points})</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">💰</span>
+                  <span className="font-semibold">Desconto: {currentDiscount}%</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🏷️</span>
+                  <span className="font-semibold text-green-600">Preço: R$ {currentPrice.toFixed(2)}</span>
+                </div>
               </div>
             </div>
           ),
+          duration: 5000,
         });
 
         const newStage = checkNewStageUnlocked(previousCount, newCount);
@@ -620,20 +644,42 @@ export default function Home() {
           const StageIcon = newStage.Icon;
           setTimeout(() => {
             toast({
-              title: `🏆 Etapa ${newStage.stage} Desbloqueada!`,
+              title: (
+                <div className="flex items-center gap-2">
+                  <span className="text-3xl animate-spin">🏆</span>
+                  <span className="font-bold text-lg">Etapa {newStage.stage} Desbloqueada!</span>
+                  <span className="text-3xl animate-spin" style={{ animationDelay: '0.2s' }}>⭐</span>
+                </div>
+              ),
               description: (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <StageIcon className="w-5 h-5 text-green-600" />
-                    <span className="font-semibold">{newStage.bonus}</span>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-center gap-1 text-4xl">
+                    <span className="animate-bounce" style={{ animationDelay: '0s' }}>🎉</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.1s' }}>🎊</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.2s' }}>✨</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.3s' }}>🌟</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.4s' }}>🎈</span>
+                    <span className="animate-bounce" style={{ animationDelay: '0.5s' }}>🎉</span>
                   </div>
-                  <div className="text-sm space-y-1">
-                    <div>Novo desconto: {newStage.discount}%</div>
-                    <div>Novo preço: R$ {newStage.price.toFixed(2)}</div>
+                  <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-4 rounded-lg border-2 border-green-200">
+                    <div className="flex items-center gap-3 mb-3">
+                      <StageIcon className="w-8 h-8 text-green-600" />
+                      <span className="font-bold text-lg text-green-700">{newStage.bonus}</span>
+                    </div>
+                    <div className="text-sm space-y-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">💰</span>
+                        <span className="font-semibold">Novo desconto: {newStage.discount}%</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xl">🏷️</span>
+                        <span className="font-semibold text-green-600">Novo preço: R$ {newStage.price.toFixed(2)}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ),
-              duration: 5000,
+              duration: 7000,
             });
           }, 300);
         }
