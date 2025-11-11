@@ -5,7 +5,8 @@ import DayCalendar from "@/components/DayCalendar";
 import DayDetailModal from "@/components/DayDetailModal";
 import PaymentSection from "@/components/PaymentSection";
 import UpgradeCallToAction from "@/components/UpgradeCallToAction";
-import RewardSystem from "@/components/RewardSystem";
+import { useToast } from "@/hooks/use-toast";
+import { checkNewStageUnlocked, calculatePoints, getCurrentDiscount, getCurrentPrice } from "@/lib/rewards";
 
 //todo: remove mock functionality - Replace with real data from backend
 const CHALLENGE_DATA = [
@@ -531,8 +532,9 @@ export default function Home() {
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPremiumUser, setIsPremiumUser] = useState(false); // Controla se o usuário comprou o pacote completo
+  const [isPremiumUser, setIsPremiumUser] = useState(false);
   const [showUpgradeCTA, setShowUpgradeCTA] = useState(false);
+  const { toast } = useToast();
 
   useEffect(() => {
     const stored = localStorage.getItem('completedDays');
@@ -587,10 +589,37 @@ export default function Home() {
 
     setCompletedDays(prev => {
       const newSet = new Set(prev);
+      const previousCount = newSet.size;
+      
       if (newSet.has(selectedDay)) {
         newSet.delete(selectedDay);
       } else {
         newSet.add(selectedDay);
+        const newCount = newSet.size;
+        
+        const newStage = checkNewStageUnlocked(previousCount, newCount);
+        if (newStage) {
+          const StageIcon = newStage.Icon;
+          setTimeout(() => {
+            toast({
+              title: `🎉 Etapa ${newStage.stage} Desbloqueada!`,
+              description: (
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <StageIcon className="w-5 h-5 text-green-600" />
+                    <span className="font-semibold">{newStage.bonus}</span>
+                  </div>
+                  <div className="text-sm">
+                    <div>💰 Novo desconto: {newStage.discount}%</div>
+                    <div>💵 Novo preço: R$ {newStage.price.toFixed(2)}</div>
+                    <div>⭐ Pontos: {calculatePoints(newCount)}</div>
+                  </div>
+                </div>
+              ),
+              duration: 5000,
+            });
+          }, 300);
+        }
       }
       return newSet;
     });
