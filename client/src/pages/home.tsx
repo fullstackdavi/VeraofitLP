@@ -597,45 +597,45 @@ export default function Home() {
         newSet.add(selectedDay);
         const newCount = newSet.size;
 
-        // Show completion notification
+        // Check if a new stage was unlocked
+        const newStage = checkNewStageUnlocked(previousCount, newCount);
         const points = calculatePoints(newCount);
         const currentDiscount = getCurrentDiscount(newCount);
         const currentPrice = getCurrentPrice(newCount);
 
-        toast({
-          title: `🎉 Dia ${selectedDay} Concluído!`,
-          description: (
-            <div className="space-y-2">
-              <div className="text-sm space-y-1">
-                <div>✨ +100 pontos (Total: {points})</div>
-                <div>💰 Desconto atual: {currentDiscount}%</div>
-                <div>🏷️ Preço atual: R$ {currentPrice.toFixed(2)}</div>
-              </div>
-            </div>
-          ),
-        });
-
-        const newStage = checkNewStageUnlocked(previousCount, newCount);
         if (newStage) {
+          // Show combined notification for stage unlock
           const StageIcon = newStage.Icon;
-          setTimeout(() => {
-            toast({
-              title: `🏆 Etapa ${newStage.stage} Desbloqueada!`,
-              description: (
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <StageIcon className="w-5 h-5 text-green-600" />
-                    <span className="font-semibold">{newStage.bonus}</span>
-                  </div>
-                  <div className="text-sm space-y-1">
-                    <div>Novo desconto: {newStage.discount}%</div>
-                    <div>Novo preço: R$ {newStage.price.toFixed(2)}</div>
-                  </div>
+          toast({
+            title: `🏆 Etapa ${newStage.stage} Desbloqueada!`,
+            description: (
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <StageIcon className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold">{newStage.bonus}</span>
                 </div>
-              ),
-              duration: 5000,
-            });
-          }, 300);
+                <div className="text-sm space-y-1">
+                  <div>✨ +100 pontos (Total: {points})</div>
+                  <div>💰 Novo desconto: {newStage.discount}%</div>
+                  <div>🏷️ Novo preço: R$ {newStage.price.toFixed(2)}</div>
+                </div>
+              </div>
+            ),
+          });
+        } else {
+          // Show regular day completion notification
+          toast({
+            title: `🎉 Dia ${selectedDay} Concluído!`,
+            description: (
+              <div className="space-y-2">
+                <div className="text-sm space-y-1">
+                  <div>✨ +100 pontos (Total: {points})</div>
+                  <div>💰 Desconto atual: {currentDiscount}%</div>
+                  <div>🏷️ Preço atual: R$ {currentPrice.toFixed(2)}</div>
+                </div>
+              </div>
+            ),
+          });
         }
       }
       return newSet;
