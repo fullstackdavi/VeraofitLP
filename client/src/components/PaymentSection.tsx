@@ -4,7 +4,7 @@ import { Check, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function PaymentSection() {
   const benefits = [
-    "30 dias de desafios personalizados",
+    "7 dias de desafios personalizados",
     "Receitas saudáveis e práticas",
     "Checkpoints diários de progresso",
     "Dicas de nutrição e exercícios",
@@ -24,18 +24,18 @@ export default function PaymentSection() {
         <div className="grid md:grid-cols-2 gap-8 items-center">
           <div className="space-y-6">
             <h2 className="text-4xl font-bold text-gray-800">
-              Desbloqueie os 30 Dias Completos
+              Garanta seu Acesso ao Desafio
             </h2>
             <p className="text-lg text-gray-600">
-              Você já experimentou os primeiros 10 dias gratuitos. Agora continue sua jornada com acesso completo!
+              Complete os 7 dias do Desafio Verão Fit e transforme seu corpo para o verão!
             </p>
 
             <div className="space-y-4">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="w-6 h-6 text-green-600 mt-1" />
                 <div>
-                  <h3 className="font-semibold text-gray-800">Mais 20 Dias de Receitas</h3>
-                  <p className="text-gray-600">Continue com receitas exclusivas e variadas</p>
+                  <h3 className="font-semibold text-gray-800">Receitas Completas</h3>
+                  <p className="text-gray-600">7 dias de receitas exclusivas e variadas</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -67,7 +67,7 @@ export default function PaymentSection() {
               <div className="text-sm text-orange-600 font-semibold mb-2">
                 50% OFF - SOMENTE HOJE
               </div>
-              <CardTitle className="text-2xl">Desafio Completo de 30 Dias</CardTitle>
+              <CardTitle className="text-2xl">Desafio Completo de 7 Dias</CardTitle>
               <CardDescription>Desbloqueie todos os dias agora</CardDescription>
             </CardHeader>
             <CardContent className="space-y-6 pt-6">

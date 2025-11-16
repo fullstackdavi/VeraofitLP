@@ -13,12 +13,12 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
           Verão Fit
         </h1>
         <h2 className="text-white text-3xl md:text-4xl font-semibold mb-8">
-          Desafio de 30 Dias
+          Desafio de 7 Dias
         </h2>
         
         <p className="text-white/95 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
           Receitas, desafios e checkpoints para secar até o verão. 
-          Transforme seu corpo com um plano completo de 30 dias.
+          Transforme seu corpo com um plano completo de 7 dias.
         </p>
         
         <Button 
