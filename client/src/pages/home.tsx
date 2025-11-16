@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import HeroSection from "@/components/HeroSection";
 import ProgressBar from "@/components/ProgressBar";
-import DayCalendar from "@/components/DayCalendar";
 import DayDetailModal from "@/components/DayDetailModal";
 import PaymentSection from "@/components/PaymentSection";
 import UpgradeCallToAction from "@/components/UpgradeCallToAction";
+import MilestoneDialog from "@/components/MilestoneDialog";
 import { useToast } from "@/hooks/use-toast";
 import { checkNewStageUnlocked, calculatePoints, getCurrentDiscount, getCurrentPrice } from "@/lib/rewards";
 
@@ -530,6 +530,8 @@ const FREE_DAYS_LIMIT = 10; // Define o limite de dias gratuitos
 export default function Home() {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
+  const [showMilestoneDialog, setShowMilestoneDialog] = useState(false);
+  const [milestoneDay, setMilestoneDay] = useState<number | null>(null);
   const [completedDays, setCompletedDays] = useState<Set<number>>(new Set());
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isPremiumUser, setIsPremiumUser] = useState(false);
@@ -556,6 +558,15 @@ export default function Home() {
     const freeCompletedDays = Array.from(completedDays).filter(day => day <= FREE_DAYS_LIMIT);
     if (freeCompletedDays.length >= 7 && !isPremiumUser) {
       setShowUpgradeCTA(true);
+    }
+
+    // Mostrar diálogo de marco para dias 3 e 6
+    if (completedDays.has(3) && !isPremiumUser) {
+      setShowMilestoneDialog(true);
+      setMilestoneDay(3);
+    } else if (completedDays.has(6) && !isPremiumUser) {
+      setShowMilestoneDialog(true);
+      setMilestoneDay(6);
     }
   }, [completedDays, isPremiumUser]);
 
@@ -724,6 +735,12 @@ export default function Home() {
           onContinue={handleContinueToNext}
         />
       )}
+
+      <MilestoneDialog
+        open={showMilestoneDialog}
+        onClose={() => setShowMilestoneDialog(false)}
+        daysCompleted={milestoneDay ?? 0}
+      />
     </div>
   );
 }
