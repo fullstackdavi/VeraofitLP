@@ -90,7 +90,6 @@ export default function PaymentSection() {
                 size="lg"
                 className="w-full text-lg py-6 bg-gradient-to-r from-orange-600 to-blue-600 hover:from-orange-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
                 onClick={() => window.open('https://wa.me/5531993640574?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20Desafio%20Ver%C3%A3o%20Fit%20%F0%9F%91%8B', '_blank')}
-                data-testid="button-unlock-whatsapp"
               >
                 🔓 Desbloquear Agora - R$ 29,90
               </Button>
