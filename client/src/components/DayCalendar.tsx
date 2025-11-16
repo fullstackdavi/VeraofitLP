@@ -85,33 +85,15 @@ export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit =
         </Card>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-10 gap-3">
-          {days.map((day) => {
-            const isStageDay = REWARD_STAGES.some(stage => stage.daysRequired === day);
-            const stage = REWARD_STAGES.find(s => s.daysRequired === day);
-            
-            return (
-              <div key={day} className="relative">
-                {isStageDay && stage && (
-                  <Badge 
-                    className="absolute -top-2 -right-2 z-10"
-                    style={{
-                      backgroundColor: completedDays.has(day) ? '#16a34a' : '#7c3aed',
-                      color: '#ffffff'
-                    }}
-                    data-testid={`stage-badge-${day}`}
-                  >
-                    Etapa {stage.stage}
-                  </Badge>
-                )}
-                <DayCard
-                  day={day}
-                  isCompleted={completedDays.has(day)}
-                  isLocked={day > freeDaysLimit}
-                  onClick={() => onDayClick(day)}
-                />
-              </div>
-            );
-          })}
+          {days.map((day) => (
+            <DayCard
+              key={day}
+              day={day}
+              isCompleted={completedDays.has(day)}
+              isLocked={day > freeDaysLimit}
+              onClick={() => onDayClick(day)}
+            />
+          ))}
         </div>
       </div>
     </section>
