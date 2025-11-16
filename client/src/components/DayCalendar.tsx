@@ -88,7 +88,7 @@ export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit =
           {days.map((day) => {
             const isStageDay = REWARD_STAGES.some(stage => stage.daysRequired === day);
             const stage = REWARD_STAGES.find(s => s.daysRequired === day);
-            
+
             return (
               <div key={day} className="relative">
                 {isStageDay && stage && (

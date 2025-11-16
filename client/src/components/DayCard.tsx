@@ -12,46 +12,32 @@ interface DayCardProps {
 export default function DayCard({ day, isCompleted, isLocked = false, onClick }: DayCardProps) {
   return (
     <div
-      onClick={isLocked ? undefined : onClick}
-      className={cn(
-        "relative rounded-xl p-6 transition-all duration-300",
-        "border-4 backdrop-blur-md",
-        isLocked 
-          ? "border-gray-400 cursor-not-allowed opacity-70" 
-          : "cursor-pointer hover:shadow-2xl hover:-translate-y-1",
-        isCompleted && !isLocked
-          ? "border-green-500" 
-          : !isLocked && "border-white/30 hover:border-blue-400"
-      )}
-      style={{
-        backgroundColor: isCompleted && !isLocked 
-          ? 'rgba(209, 250, 229, 0.25)' 
-          : isLocked 
-          ? 'rgba(229, 231, 235, 0.25)' 
-          : 'rgba(255, 255, 255, 0.15)',
-        boxShadow: isCompleted && !isLocked 
-          ? '0 10px 25px rgba(34, 197, 94, 0.2)' 
-          : '0 4px 10px rgba(0,0,0,0.1)'
+      onClick={!isLocked ? onClick : undefined}
+      className={`
+        relative rounded-xl p-5 border-2 text-center transition-all duration-200
+        ${isLocked 
+          ? 'bg-gray-200/70 border-gray-300 cursor-not-allowed opacity-60' 
+          : isCompleted 
+            ? 'bg-green-50 border-green-500 hover:bg-green-100 hover:shadow-lg hover:-translate-y-1 cursor-pointer' 
+            : 'bg-white border-gray-200 hover:border-primary hover:shadow-lg hover:-translate-y-1 cursor-pointer'
+        }
+      `}
+      style={{ 
+        backgroundColor: isLocked ? '#e5e7eb' : isCompleted ? '#f0fdf4' : '#ffffff',
+        borderColor: isLocked ? '#d1d5db' : isCompleted ? '#22c55e' : '#e5e7eb'
       }}
-      data-testid={`card-day-${day}`}
     >
-      <div className="flex flex-col items-center gap-2">
-        <span className={cn(
-          "text-4xl font-bold",
-          isLocked ? "text-gray-500" : isCompleted ? "text-green-700" : "text-gray-900"
-        )}
+      <div className="flex flex-col items-center gap-1">
+        <span className={`text-3xl font-bold ${isLocked ? 'opacity-40' : ''}`}
         style={{ 
-          color: isLocked ? '#6b7280' : isCompleted ? '#15803d' : '#111827',
+          color: isLocked ? '#9ca3af' : isCompleted ? '#16a34a' : '#374151',
           textShadow: 'none'
         }}>
           {day}
         </span>
-        <span className={cn(
-          "text-sm font-semibold",
-          isLocked ? "text-gray-500" : isCompleted ? "text-green-600" : "text-gray-700"
-        )}
+        <span className={`text-xs ${isLocked ? 'opacity-40' : 'text-muted-foreground'}`}
         style={{ 
-          color: isLocked ? '#6b7280' : isCompleted ? '#16a34a' : '#374151',
+          color: isLocked ? '#9ca3af' : isCompleted ? '#16a34a' : '#374151',
           textShadow: 'none'
         }}>
           Dia {day}
@@ -60,7 +46,7 @@ export default function DayCard({ day, isCompleted, isLocked = false, onClick }:
           <CheckCircle2 className="w-7 h-7 text-green-600 absolute top-2 right-2" style={{ color: '#16a34a' }} />
         )}
         {isLocked && (
-          <Lock className="w-7 h-7 text-gray-500 absolute top-2 right-2" style={{ color: '#6b7280' }} />
+          <Lock className="w-8 h-8 text-gray-400 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ color: '#9ca3af' }} />
         )}
       </div>
     </div>
