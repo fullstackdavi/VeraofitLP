@@ -89,7 +89,7 @@ export default function PaymentSection() {
               <Button
                 size="lg"
                 className="w-full text-lg py-6 bg-gradient-to-r from-orange-600 to-blue-600 hover:from-orange-700 hover:to-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse"
-                onClick={() => window.open('https://pay.kirvano.com/eb9cd063-4d7d-485f-b682-36880472398d', '_blank')}
+                onClick={() => window.open('https://pay.kirvano.com/7ae6b1fa-9f19-477b-83e8-cdd267f712c2', '_blank')}
               >
                 🔓 Desbloquear Agora - R$ 29,90
               </Button>
