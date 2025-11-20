@@ -43,11 +43,17 @@ export default function DayCalendar({ completedDays, onDayClick, freeDaysLimit =
           }}
           data-testid="reward-progress-banner"
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="flex flex-col items-center justify-center gap-2 text-center">
               <Star className="w-8 h-8 text-purple-600" />
               <div className="text-sm font-medium" style={{ color: '#6b7280' }}>Pontos</div>
               <div className="text-2xl font-bold" style={{ color: '#7c3aed' }}>{points}</div>
+            </div>
+
+            <div className="flex flex-col items-center justify-center gap-2 text-center">
+              <TrendingDown className="w-8 h-8 text-green-600" />
+              <div className="text-sm font-medium" style={{ color: '#6b7280' }}>Desconto Atual</div>
+              <div className="text-2xl font-bold" style={{ color: '#16a34a' }}>{currentDiscount}%</div>
             </div>
 
             <div className="flex flex-col items-center justify-center gap-2 text-center">
