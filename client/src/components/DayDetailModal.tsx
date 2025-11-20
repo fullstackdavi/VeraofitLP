@@ -183,7 +183,7 @@ export default function DayDetailModal({
               </Button>
             </div>
             
-            {isCompleted && dayData.day === 10 && isLocked && onUnlock && (
+            {isCompleted && dayData.day === 10 && onUnlock && (
               <Button
                 className="w-full bg-gradient-to-r from-blue-600 to-orange-600 hover:from-blue-700 hover:to-orange-700 text-white"
                 onClick={onUnlock}
@@ -193,7 +193,7 @@ export default function DayDetailModal({
               </Button>
             )}
             
-            {isCompleted && onContinue && dayData.day < 30 && !(dayData.day === 10 && isLocked) && (
+            {isCompleted && onContinue && dayData.day < 30 && dayData.day !== 10 && (
               <Button
                 className="w-full bg-green-600 hover:bg-green-700"
                 onClick={onContinue}
