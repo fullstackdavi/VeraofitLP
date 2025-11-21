@@ -8,15 +8,15 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
       
-      <div className="relative z-10 container mx-auto px-4 py-16 text-center max-w-4xl">
-        <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 leading-tight">
+      <div className="relative z-10 container mx-auto px-4 py-12 sm:py-16 text-center max-w-4xl">
+        <h1 className="text-white text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 leading-tight">
           Verão Fit
         </h1>
-        <h2 className="text-white text-3xl md:text-4xl font-semibold mb-8">
+        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-semibold mb-6 sm:mb-8">
           Desafio de 30 Dias
         </h2>
         
-        <p className="text-white/95 text-lg md:text-xl mb-8 max-w-2xl mx-auto leading-relaxed">
+        <p className="text-white/95 text-base sm:text-lg md:text-xl mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed px-2">
           Receitas, desafios e checkpoints para secar até o verão. 
           Transforme seu corpo com um plano completo de 30 dias.
         </p>
@@ -24,14 +24,14 @@ export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
         <Button 
           size="lg"
           variant="secondary"
-          className="text-lg px-8 py-6 h-auto font-semibold hover:scale-105 transition-transform"
+          className="text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 h-auto font-semibold hover:scale-105 transition-transform"
           onClick={onStartChallenge}
           data-testid="button-start-challenge"
         >
           Entrar no Desafio
         </Button>
         
-        <p className="text-white/80 text-sm mt-6">
+        <p className="text-white/80 text-xs sm:text-sm mt-4 sm:mt-6">
           ✨ Mais de 500 pessoas já começaram
         </p>
       </div>
