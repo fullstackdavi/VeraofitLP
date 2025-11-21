@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import heroBackground from "@assets/stock_images/vibrant_summer_fitne_0c5aeef3.jpg";
 
 interface HeroSectionProps {
   onStartChallenge: () => void;
@@ -8,22 +7,6 @@ interface HeroSectionProps {
 export default function HeroSection({ onStartChallenge }: HeroSectionProps) {
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center overflow-hidden">
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          backgroundImage: `url(${heroBackground})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat'
-        }}
-      />
-      
-      <div 
-        className="absolute inset-0 z-[1]"
-        style={{
-          background: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6))'
-        }}
-      />
       
       <div className="relative z-10 container mx-auto px-4 py-16 text-center max-w-4xl">
         <h1 className="text-white text-5xl md:text-7xl font-bold mb-6 leading-tight">
