@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
+import BackgroundVideo from "@/components/BackgroundVideo";
 
 function Router() {
   return (
@@ -19,6 +20,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <BackgroundVideo />
         <Toaster />
         <Router />
       </TooltipProvider>
