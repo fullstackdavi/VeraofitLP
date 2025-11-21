@@ -10,41 +10,61 @@ export default function BackgroundVideo() {
     // Função para tentar reproduzir o vídeo
     const playVideo = async () => {
       try {
-        // Garantir que o vídeo está mudo (requisito para autoplay)
+        // Garantir atributos críticos para mobile
         video.muted = true;
         video.playsInline = true;
+        video.setAttribute('playsinline', '');
+        video.setAttribute('webkit-playsinline', '');
+        video.defaultMuted = true;
+        
+        // Força o vídeo a carregar
+        video.load();
         
         // Tentar reproduzir
-        await video.play();
-        console.log("Vídeo reproduzindo com sucesso");
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+          await playPromise;
+          console.log("✅ Vídeo reproduzindo com sucesso");
+        }
       } catch (error) {
-        console.log("Erro ao tentar reproduzir vídeo:", error);
+        console.log("⚠️ Primeira tentativa falhou, aguardando interação:", error);
         
         // Em caso de erro, tentar novamente após uma interação do usuário
         const tryPlayOnInteraction = async () => {
           try {
+            video.muted = true;
+            video.playsInline = true;
             await video.play();
-            console.log("Vídeo reproduzindo após interação");
-            // Remover os listeners após sucesso
-            document.removeEventListener("touchstart", tryPlayOnInteraction);
-            document.removeEventListener("click", tryPlayOnInteraction);
+            console.log("✅ Vídeo reproduzindo após interação do usuário");
           } catch (err) {
-            console.log("Ainda não foi possível reproduzir:", err);
+            console.log("❌ Ainda não foi possível reproduzir:", err);
           }
         };
 
-        // Adicionar listeners para eventos de interação
-        document.addEventListener("touchstart", tryPlayOnInteraction, { once: true });
-        document.addEventListener("click", tryPlayOnInteraction, { once: true });
+        // Múltiplos eventos de interação para garantir compatibilidade
+        const events = ['touchstart', 'touchend', 'click', 'scroll'];
+        events.forEach(eventType => {
+          document.addEventListener(eventType, tryPlayOnInteraction, { once: true, passive: true });
+        });
       }
     };
 
-    // Tentar reproduzir quando o vídeo estiver pronto
-    if (video.readyState >= 3) {
-      playVideo();
-    } else {
-      video.addEventListener("loadeddata", playVideo, { once: true });
+    // Respeitar preferência de movimento reduzido
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      video.pause();
+      return;
     }
+
+    // Tentar reproduzir imediatamente
+    playVideo();
+
+    // Tentar também quando os metadados carregarem
+    video.addEventListener('loadedmetadata', playVideo, { once: true });
+    
+    // E quando o vídeo estiver pronto para reproduzir
+    video.addEventListener('canplay', playVideo, { once: true });
 
     // Usar Intersection Observer para garantir reprodução quando visível
     const observer = new IntersectionObserver(
@@ -55,13 +75,23 @@ export default function BackgroundVideo() {
           }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.1 }
     );
 
     observer.observe(video);
 
+    // Adicionar listener para quando a página voltar ao foco
+    const handleVisibilityChange = () => {
+      if (!document.hidden && video.paused) {
+        playVideo();
+      }
+    };
+    
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
     return () => {
       observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 
@@ -74,12 +104,24 @@ export default function BackgroundVideo() {
       loop
       playsInline
       preload="auto"
+      webkit-playsinline="true"
+      x-webkit-airplay="allow"
       data-testid="background-video"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+        zIndex: -2
+      }}
     >
       <source
-        src="https://media.istockphoto.com/id/2183275271/video/super-slow-motion-shot-of-ice-cube-falling-into-glass-with-lemonade-at-1000fps-with-camera.mp4?s=mp4-640x640-is&k=20&c=ZJvOdaDxxpUPoxSS5ZlqXr10sRlIkzBnonuLmuZhTRo="
+        src="https://media.istockphoto.com/id/2183275271/video/super-slow-motion-shot-of-ice-cube-falling-into-glass-with-lemonade-at-1000fps-with-camera.mp4?s=mp4-640x640-is&k=20&c=ZJvOdaDxxpUPoxSS5ZlqXr10sRlIkzBnonuLmuZhTRo=#t=0.001"
         type="video/mp4"
       />
+      Seu navegador não suporta vídeos HTML5.
     </video>
   );
 }
